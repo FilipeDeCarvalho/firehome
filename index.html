@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congresso Enraizados no Reino</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Configuração do background desfocado */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/Congresso.jpeg') no-repeat center center;
+            background-size: cover;
+            filter: blur(3px); /* Aplica o desfoque ao fundo */
+            z-index: -1; /* Coloca o background atrás do conteúdo */
+        }
+
+        /* Estilo do conteúdo principal */
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7); /* Fundo transparente preto */
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #FF4500; /* Laranja vibrante */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-out forwards;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: #FFA500; /* Amarelo suave */
+            font-weight: 300;
+            margin-bottom: 30px;
+            animation: fadeIn 2s 1s ease-out forwards;
+        }
+
+        #timer {
+            font-size: 2.5rem;
+            color: #FFFFFF; /* Branco puro para o timer */
+            margin-bottom: 40px;
+            display: flex;
+            gap: 10px;
+            text-shadow: 0px 0px 15px rgba(255, 69, 0, 0.8); /* Sombra laranja neon */
+            animation: fadeIn 2s 2s ease-out forwards;
+            justify-content: center;
+        }
+
+        /* Animação de pulo nos segundos */
+        #seconds {
+            animation: jump 1s ease-in-out infinite alternate;
+        }
+
+        /* Definindo o @keyframes para a animação jump */
+        @keyframes jump {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        .btn-inscricao {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #FF4500; /* Laranja vibrante */
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+            animation: fadeIn 2s 3s ease-out forwards;
+        }
+
+        .btn-inscricao:hover {
+            background-color: #FF6347; /* Tom de laranja mais claro no hover */
+            transform: scale(1.05);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20px;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        /* Animações de Fade-In */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Div para o fundo desfocado -->
+    <div class="background"></div>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <header>
+            <h1>Enraizados no Reino</h1>
+            <h2>Congresso Jovem</h2>
+        </header>
+
+        <div id="timer">
+            <span id="days">00</span>D 
+            <span id="hours">00</span>H 
+            <span id="minutes">00</span>M 
+            <span id="seconds">00</span>S <!-- A animação jump está aplicada somente neste span -->
+        </div>
+
+        <a href="https://www.sympla.com.br/congresso-jovem---enraizados-no-reino-presencial__2633460" target="_blank">
+            <button class="btn-inscricao">Inscreva-se</button>
+        </a>
+        
+    </div>
+
+    <footer>
+        &copy; 2024 Enraizados no Reino - Todos os direitos reservados.
+    </footer>
+
+    <script>
+        // Definindo a data do evento
+        const eventDate = new Date("October 25, 2024 00:00:00").getTime();
+
+        // Função para atualizar o timer
+        function updateTimer() {
+            const now = new Date().getTime();
+            const timeRemaining = eventDate - now;
+
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            // Atualiza os valores do timer na página
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+
+            // Parar o timer se a data já passou
+            if (timeRemaining < 0) {
+                clearInterval(timerInterval);
+                document.getElementById("timer").textContent = "Evento já começou!";
+            }
+        }
+
+        // Atualiza o timer a cada segundo
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Iniciar o timer imediatamente ao carregar a página
+        updateTimer();
+    </script>
+</body>
+</html>
